@@ -1,0 +1,25 @@
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# Node/npm
+node_modules/
+
+# Secrets and credentials
+.env
+*.json
+
+# Build outputs
+build/
+dist/
+
+# Firebase token
+.firebase/
