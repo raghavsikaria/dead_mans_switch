@@ -17,6 +17,7 @@ node_modules/
 # Secrets and credentials
 .env
 *.json
+!frontend/firebase.json
 
 # Build outputs
 build/
