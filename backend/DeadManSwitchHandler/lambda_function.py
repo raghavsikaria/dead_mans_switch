@@ -26,7 +26,7 @@ if not firebase_admin._apps:
     firebase_admin.initialize_app(cred)
 
 def validate_token(headers):
-    auth_header = headers.get('Authorization', '')
+    auth_header = headers.get('authorization', '')
     if not auth_header.startswith('Bearer '):
         raise Exception("Missing or malformed token")
 
