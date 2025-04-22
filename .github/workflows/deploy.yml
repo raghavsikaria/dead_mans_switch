@@ -12,7 +12,8 @@ env:
   AWS_REGION: us-east-1
 
 jobs:
-  deploy:
+  terraform:
+    name: Terraform Deploy
     runs-on: ubuntu-latest
 
     steps:
@@ -52,11 +53,19 @@ jobs:
 
       - name: Terraform Init
         working-directory: infra
-        run: terraform init
+        run: terraform init -input=false
+
+      - name: Terraform Validate
+        working-directory: infra
+        run: terraform validate
+
+      - name: Terraform Plan
+        working-directory: infra
+        run: terraform plan -input=false
 
       - name: Terraform Apply
         working-directory: infra
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve -input=false
         env:
           TF_VAR_sender_email: ${{ secrets.SENDER_EMAIL }}
           TF_VAR_firebase_client_email: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
