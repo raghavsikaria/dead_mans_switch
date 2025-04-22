@@ -7,7 +7,7 @@
   </head>
   <body>
     <h1>Welcome to Dead Man's Switch</h1>
-    <button id="loginBtn">Sign in with Google/Check In</button>
+    <button id="loginBtn">Sign in with Google</button>
 
     <form id="settingsForm" style="display:none;">
       <label>Threshold Time (in hours): <input type="number" id="threshold" /></label><br/>
