@@ -94,8 +94,9 @@ resource "aws_iam_policy_attachment" "handler_dynamodb_full" {
 
 # Lambda Functions
 resource "aws_lambda_function" "handler_lambda" {
-  function_name = "DeadManSwitchHandler"
+  function_name = "DeadManSwitchHandlerTF"
   filename      = var.handler_zip_path
+  source_code_hash = filebase64sha256(var.handler_zip_path)
   handler       = "lambda_function.lambda_handler"
   runtime       = "python3.11"
   role          = aws_iam_role.handler_lambda_role.arn
@@ -117,8 +118,9 @@ resource "aws_lambda_function" "handler_lambda" {
 }
 
 resource "aws_lambda_function" "checker_lambda" {
-  function_name = "DeadManSwitchChecker"
+  function_name = "DeadManSwitchCheckerTF"
   filename      = var.checker_zip_path
+  source_code_hash = filebase64sha256(var.checker_zip_path)
   handler       = "lambda_function.lambda_handler"
   runtime       = "python3.11"
   role          = aws_iam_role.checker_lambda_role.arn
@@ -155,6 +157,12 @@ resource "aws_lambda_permission" "allow_eventbridge" {
 resource "aws_apigatewayv2_api" "http_api" {
   name          = "DeadManSwitchAPI"
   protocol_type = "HTTP"
+
+  cors_configuration {
+    allow_origins = ["https://deadmans-switch-f8d02.web.app"]
+    allow_methods = ["POST", "OPTIONS"]
+    allow_headers = ["*"]
+  }
 }
 
 resource "aws_apigatewayv2_integration" "lambda_integration" {
