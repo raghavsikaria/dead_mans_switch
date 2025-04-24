@@ -66,9 +66,9 @@ jobs:
           TF_VAR_aws_region: ${{ secrets.AWS_REGION }}
           TF_VAR_dynamodb_table_name: ${{ secrets.DYNAMODB_TABLE_NAME }}
           TF_VAR_firebase_app_url: ${{ secrets.FIREBASE_APP_URL }}
-          TF_VAR_handler_zip_path: ../../backend/DeadManSwitchHandler/handler.zip
-          TF_VAR_checker_zip_path: ../../backend/DeadManSwitchChecker/checker.zip
-          TF_VAR_firebase_layer_zip_path: ../../backend/firebase_layer/layer.zip
+          TF_VAR_handler_zip_path: ${{ github.workspace }}/backend/DeadManSwitchHandler/handler.zip
+          TF_VAR_checker_zip_path: ${{ github.workspace }}/backend/DeadManSwitchChecker/checker.zip
+          TF_VAR_firebase_layer_zip_path: ${{ github.workspace }}/backend/firebase_layer/layer.zip
           TF_VAR_sender_email: ${{ secrets.SENDER_EMAIL }}
           TF_VAR_firebase_client_email: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
           TF_VAR_firebase_private_key: ${{ secrets.FIREBASE_PRIVATE_KEY }}
@@ -84,9 +84,9 @@ jobs:
           TF_VAR_aws_region: ${{ secrets.AWS_REGION }}
           TF_VAR_dynamodb_table_name: ${{ secrets.DYNAMODB_TABLE_NAME }}
           TF_VAR_firebase_app_url: ${{ secrets.FIREBASE_APP_URL }}
-          TF_VAR_handler_zip_path: ../../backend/DeadManSwitchHandler/handler.zip
-          TF_VAR_checker_zip_path: ../../backend/DeadManSwitchChecker/checker.zip
-          TF_VAR_firebase_layer_zip_path: ../../backend/firebase_layer/layer.zip
+          TF_VAR_handler_zip_path: ${{ github.workspace }}/backend/DeadManSwitchHandler/handler.zip
+          TF_VAR_checker_zip_path: ${{ github.workspace }}/backend/DeadManSwitchChecker/checker.zip
+          TF_VAR_firebase_layer_zip_path: ${{ github.workspace }}/backend/firebase_layer/layer.zip
           TF_VAR_sender_email: ${{ secrets.SENDER_EMAIL }}
           TF_VAR_firebase_client_email: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
           TF_VAR_firebase_private_key: ${{ secrets.FIREBASE_PRIVATE_KEY }}
