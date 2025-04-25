@@ -56,32 +56,27 @@ resource "aws_iam_role" "checker_lambda_role" {
 
 # IAM Policy Attachments
 resource "aws_iam_role_policy_attachment" "handler_basic_execution" {
-  name       = "handler-lambda-basic-execution"
-  roles      = [aws_iam_role.handler_lambda_role.name]
+  role       = aws_iam_role.handler_lambda_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
 resource "aws_iam_role_policy_attachment" "checker_basic_execution" {
-  name       = "checker-lambda-basic-execution"
-  roles      = [aws_iam_role.checker_lambda_role.name]
+  role       = aws_iam_role.checker_lambda_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
 resource "aws_iam_role_policy_attachment" "checker_dynamodb_read" {
-  name       = "checker-dynamodb-read-access"
-  roles      = [aws_iam_role.checker_lambda_role.name]
+  role       = aws_iam_role.checker_lambda_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonDynamoDBReadOnlyAccess"
 }
 
 resource "aws_iam_role_policy_attachment" "checker_ses_access" {
-  name       = "checker-ses-access"
-  roles      = [aws_iam_role.checker_lambda_role.name]
+  role       = aws_iam_role.checker_lambda_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSESFullAccess"
 }
 
 resource "aws_iam_role_policy_attachment" "handler_dynamodb_full" {
-  name       = "handler-dynamodb-full-access"
-  roles      = [aws_iam_role.handler_lambda_role.name]
+  role       = aws_iam_role.handler_lambda_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
 }
 
