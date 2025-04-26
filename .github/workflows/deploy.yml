@@ -12,8 +12,8 @@ env:
   AWS_REGION: us-east-1
 
 jobs:
-  terraform:
-    name: Terraform Deploy
+  backend:
+    name: Backend CI/CD Pipeline
     runs-on: ubuntu-latest
 
     steps:
@@ -37,7 +37,28 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Install Python packages and create Lambda ZIPs
+      - name: Terraform Init
+        working-directory: infra
+        run: terraform init -input=false
+
+      - name: Pre-Check: Terraform Format
+        working-directory: infra
+        run: terraform fmt -check -recursive -write=false
+
+      - name: Pre-Check: Terraform Validate
+        working-directory: infra
+        run: terraform validate
+
+      - name: Run Python Unit Tests
+        run: |
+          pip install pytest
+          if [ -d "tests" ]; then
+            pytest tests/
+          else
+            echo "No tests found. Skipping unit tests."
+          fi
+
+      - name: Build Lambda ZIPs
         run: |
           cd backend/DeadManSwitchHandler
           mkdir -p build && rm -rf build/*
@@ -50,14 +71,6 @@ jobs:
           pip install -r requirements.txt -t build/
           cp lambda_function.py build/
           cd build && zip -r ../checker.zip .
-
-      - name: Terraform Init
-        working-directory: infra
-        run: terraform init -input=false
-
-      - name: Terraform Validate
-        working-directory: infra
-        run: terraform validate
 
       - name: Terraform Plan
         working-directory: infra

@@ -89,22 +89,22 @@ resource "aws_iam_role_policy_attachment" "handler_dynamodb_full" {
 
 # Lambda Functions
 resource "aws_lambda_function" "handler_lambda" {
-  function_name = "DeadManSwitchHandlerTF"
-  filename      = var.handler_zip_path
+  function_name    = "DeadManSwitchHandlerTF"
+  filename         = var.handler_zip_path
   source_code_hash = filebase64sha256(var.handler_zip_path)
-  handler       = "lambda_function.lambda_handler"
-  runtime       = "python3.11"
-  role          = aws_iam_role.handler_lambda_role.arn
+  handler          = "lambda_function.lambda_handler"
+  runtime          = "python3.11"
+  role             = aws_iam_role.handler_lambda_role.arn
 
   environment {
     variables = {
-      DYNAMODB_TABLE              = var.dynamodb_table_name
-      SENDER_EMAIL                = var.sender_email
-      FIREBASE_CLIENT_EMAIL       = var.firebase_client_email
-      FIREBASE_PRIVATE_KEY        = var.firebase_private_key
-      FIREBASE_PROJECT_ID         = var.firebase_project_id
-      FIREBASE_CLIENT_ID          = var.firebase_client_id
-      FIREBASE_PRIVATE_KEY_ID     = var.firebase_private_key_id
+      DYNAMODB_TABLE                = var.dynamodb_table_name
+      SENDER_EMAIL                  = var.sender_email
+      FIREBASE_CLIENT_EMAIL         = var.firebase_client_email
+      FIREBASE_PRIVATE_KEY          = var.firebase_private_key
+      FIREBASE_PROJECT_ID           = var.firebase_project_id
+      FIREBASE_CLIENT_ID            = var.firebase_client_id
+      FIREBASE_PRIVATE_KEY_ID       = var.firebase_private_key_id
       FIREBASE_CLIENT_X509_CERT_URL = var.firebase_client_x509_cert_url
     }
   }
@@ -113,12 +113,12 @@ resource "aws_lambda_function" "handler_lambda" {
 }
 
 resource "aws_lambda_function" "checker_lambda" {
-  function_name = "DeadManSwitchCheckerTF"
-  filename      = var.checker_zip_path
+  function_name    = "DeadManSwitchCheckerTF"
+  filename         = var.checker_zip_path
   source_code_hash = filebase64sha256(var.checker_zip_path)
-  handler       = "lambda_function.lambda_handler"
-  runtime       = "python3.11"
-  role          = aws_iam_role.checker_lambda_role.arn
+  handler          = "lambda_function.lambda_handler"
+  runtime          = "python3.11"
+  role             = aws_iam_role.checker_lambda_role.arn
 
   environment {
     variables = {
@@ -161,10 +161,10 @@ resource "aws_apigatewayv2_api" "http_api" {
 }
 
 resource "aws_apigatewayv2_integration" "lambda_integration" {
-  api_id             = aws_apigatewayv2_api.http_api.id
-  integration_type   = "AWS_PROXY"
-  integration_uri    = aws_lambda_function.handler_lambda.invoke_arn
-  integration_method = "POST"
+  api_id                 = aws_apigatewayv2_api.http_api.id
+  integration_type       = "AWS_PROXY"
+  integration_uri        = aws_lambda_function.handler_lambda.invoke_arn
+  integration_method     = "POST"
   payload_format_version = "2.0"
 }
 
