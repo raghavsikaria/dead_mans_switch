@@ -112,5 +112,6 @@ jobs:
         id: tf_outputs
         working-directory: infra
         run: |
-          echo "API_GATEWAY_URL=$(terraform output -raw api_gateway_url)" >> $GITHUB_ENV
+          API_URL=$(terraform output -raw api_gateway_url)
+          echo "API_GATEWAY_URL=$API_URL" >> $GITHUB_ENV
 
