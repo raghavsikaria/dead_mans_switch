@@ -129,7 +129,8 @@ def lambda_handler(event, context):
                 'user_id': user_id,
                 'threshold_hours': threshold_hours,
                 'contact_emails': contact_emails,
-                'last_checkin_time': current_time
+                'last_checkin_time': current_time,
+                'register_timestamp': current_time
             }
         )
 
