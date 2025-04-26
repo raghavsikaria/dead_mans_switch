@@ -107,3 +107,10 @@ jobs:
           TF_VAR_firebase_client_id: ${{ secrets.FIREBASE_CLIENT_ID }}
           TF_VAR_firebase_private_key_id: ${{ secrets.FIREBASE_PRIVATE_KEY_ID }}
           TF_VAR_firebase_client_x509_cert_url: ${{ secrets.FIREBASE_CLIENT_X509_CERT_URL }}
+
+      - name: Get Terraform Outputs
+        id: tf_outputs
+        working-directory: infra
+        run: |
+          echo "API_GATEWAY_URL=$(terraform output -raw api_gateway_url)" >> $GITHUB_ENV
+
