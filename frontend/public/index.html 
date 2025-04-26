@@ -25,6 +25,7 @@
 
 
     <script>
+      const apiUrl = "https://fyqyyr28eh.execute-api.us-east-1.amazonaws.com/default/DeadManSwitchHandler";
       const firebaseConfig = {
         apiKey: "AIzaSyCXQw4RZq1rJjdLhP9LUCnH0dWMybYibqc",
         authDomain: "deadmans-switch-f8d02.firebaseapp.com",
@@ -48,7 +49,7 @@
 
           user.getIdToken().then((token) => {
             // Auto Check-in
-            fetch("https://fyqyyr28eh.execute-api.us-east-1.amazonaws.com/default/DeadManSwitchHandler", {
+            fetch(apiUrl, {
               method: "POST",
               headers: {
                 "Authorization": `Bearer ${token}`,
@@ -61,7 +62,7 @@
             });
 
             // Fetch existing config
-            fetch("https://fyqyyr28eh.execute-api.us-east-1.amazonaws.com/default/DeadManSwitchHandler", {
+            fetch(apiUrl, {
               method: "POST",
               headers: {
                 "Authorization": `Bearer ${token}`,
@@ -127,7 +128,7 @@
         const user_id = user.uid;
 
         firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
-          fetch("https://fyqyyr28eh.execute-api.us-east-1.amazonaws.com/default/DeadManSwitchHandler", {
+          fetch(apiUrl, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -158,7 +159,7 @@
         const user = firebase.auth().currentUser;
         const token = await user.getIdToken();
 
-        const response = await fetch("https://fyqyyr28eh.execute-api.us-east-1.amazonaws.com/default/DeadManSwitchHandler", {
+        const response = await fetch(apiUrl, {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${token}`,
