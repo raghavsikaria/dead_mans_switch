@@ -25,7 +25,7 @@
 
 
     <script>
-      const apiUrl = "https://fyqyyr28eh.execute-api.us-east-1.amazonaws.com/default/DeadManSwitchHandler";
+      const apiUrl = "https://us0kzq5ltk.execute-api.us-east-1.amazonaws.com";
       const firebaseConfig = {
         apiKey: "AIzaSyCXQw4RZq1rJjdLhP9LUCnH0dWMybYibqc",
         authDomain: "deadmans-switch-f8d02.firebaseapp.com",
