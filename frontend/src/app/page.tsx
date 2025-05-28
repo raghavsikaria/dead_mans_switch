@@ -15,12 +15,21 @@ interface StatusData {
   nextAlertTime: string
 }
 
+const Loader = () => (
+  <div className="flex items-center justify-center mt-4">
+    <svg className="animate-spin h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+    </svg>
+  </div>
+)
+
 export default function Home() {
   const [user, setUser] = useState<User | null>(null)
   const [threshold, setThreshold] = useState("")
   const [emails, setEmails] = useState("")
   const [status, setStatus] = useState<StatusData | null>(null)
-  // const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     sessionStorage.clear()
@@ -126,6 +135,8 @@ export default function Home() {
         it automatically sends alert emails to your selected contacts.
       </p>
 
+      {loading && <Loader />}
+
       {!user && (
         <Button onClick={handleGoogleSignIn}>Sign in with Google / Check In</Button>
       )}
@@ -150,8 +161,8 @@ export default function Home() {
                 onChange={(e) => setEmails(e.target.value)}
               />
             </div>
-            <Button onClick={handleSave}>Save Settings</Button>
-            <Button variant="destructive" onClick={handleDelete}>Delete My Account</Button>
+            <Button onClick={handleSave} disabled={loading}>{loading ? "Saving..." : "Save Settings"}</Button>
+            <Button variant="destructive" onClick={handleDelete} disabled={loading}>Delete My Account</Button>
 
             {status && (
               <div className="text-sm text-gray-700 space-y-1 mt-4">
