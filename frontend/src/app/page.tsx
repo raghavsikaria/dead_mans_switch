@@ -20,7 +20,7 @@ export default function Home() {
   const [threshold, setThreshold] = useState("")
   const [emails, setEmails] = useState("")
   const [status, setStatus] = useState<StatusData | null>(null)
-  const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     sessionStorage.clear()
@@ -120,7 +120,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center p-4 bg-gray-50">
-      <h1 className="text-3xl font-bold mb-4">Welcome to Dead Man's Switch</h1>
+      <h1 className="text-3xl font-bold mb-4">Welcome to Dead Man&apos;s Switch</h1>
       <p className="mb-6 text-gray-600 text-center max-w-xl">
         A safety tool that checks in on you. If you don’t check in within a configured timeframe,
         it automatically sends alert emails to your selected contacts.
