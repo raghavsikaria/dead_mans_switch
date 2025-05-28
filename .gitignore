@@ -18,6 +18,10 @@ node_modules/
 .env
 *.json
 !frontend/firebase.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!components.json
 
 # Build outputs
 build/
