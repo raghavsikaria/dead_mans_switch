@@ -1,9 +1,9 @@
-name: Deploy Frontend to Firebase Hosting
+name: Deploy React Frontend to Firebase Hosting
 
 on:
   push:
     paths:
-      - "frontend/public/**"
+      - "frontend/**"
     branches:
       - main
 
@@ -19,6 +19,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "20"
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Build React App
+        working-directory: frontend
+        run: npm run build
 
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
