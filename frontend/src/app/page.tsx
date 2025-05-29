@@ -25,6 +25,34 @@ const Loader = () => (
   </div>
 )
 
+function formatDateWithOrdinalAndTime(dateString: string): string {
+  const date = new Date(dateString);
+  const day = date.getDate();
+
+  const getOrdinal = (n: number) => {
+    if (n >= 11 && n <= 13) return `${n}th`;
+    const lastDigit = n % 10;
+    switch (lastDigit) {
+      case 1: return `${n}st`;
+      case 2: return `${n}nd`;
+      case 3: return `${n}rd`;
+      default: return `${n}th`;
+    }
+  };
+
+  const dayWithOrdinal = getOrdinal(day);
+  const month = date.toLocaleString("default", { month: "long" });
+  const year = date.getFullYear();
+  const time = date.toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+
+  return `${dayWithOrdinal} ${month} ${year}, ${time}`;
+}
+
+
 export default function Home() {
   const [user, setUser] = useState<User | null>(null)
   const [threshold, setThreshold] = useState("")
@@ -96,21 +124,70 @@ export default function Home() {
   }
 
   const handleSave = async () => {
-    if (!threshold || !emails || !user) {
-      return alert("All fields are required.")
+    if (!user) return alert("User is not signed in.")
+
+    const parsedThreshold = Number(threshold)
+  
+    if (
+      isNaN(parsedThreshold) ||
+      parsedThreshold < 20 ||
+      parsedThreshold > 480
+    ) {
+      return alert("Threshold must be a number between 20 and 480 hours.")
+    }
+
+    const emailList = emails.split(",").map(e => e.trim()).filter(e => e.length > 0)
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const invalidEmails = emailList.filter(email => !emailRegex.test(email))
+
+    if (emailList.length === 0) {
+      return alert("At least one valid contact email is required.")
+    }
+
+    if (invalidEmails.length > 0) {
+      return alert(`Invalid email(s): ${invalidEmails.join(", ")}`)
     }
 
     const token = await user.getIdToken()
 
+    setLoading(true)
+
     await axios.post("https://us0kzq5ltk.execute-api.us-east-1.amazonaws.com", {
       user_id: user.uid,
-      threshold_hours: Number(threshold),
-      contact_emails: emails.split(",").map(e => e.trim())
+      threshold_hours: parsedThreshold,
+      contact_emails: emailList
     }, {
       headers: { Authorization: `Bearer ${token}` }
     })
 
     alert("Configuration saved!")
+
+    const response = await axios.post("https://us0kzq5ltk.execute-api.us-east-1.amazonaws.com", {
+      mode: "fetch",
+      user_id: user.uid
+    }, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+
+    const item = response.data
+    if (item) {
+      const thresholdHours = item.threshold_hours
+      const lastCheckIn = item.last_checkin_time
+      const contacts = item.contact_emails
+
+      const nextAlertTime = new Date(new Date(lastCheckIn).getTime() + thresholdHours * 60 * 60 * 1000)
+
+      setThreshold(String(thresholdHours))
+      setEmails((contacts || []).join(", "))
+      setStatus({
+        threshold: thresholdHours,
+        lastCheckIn,
+        nextAlertTime: nextAlertTime.toISOString()
+      })
+    }
+
+    setLoading(false)
   }
 
   const handleDelete = async () => {
@@ -173,11 +250,11 @@ export default function Home() {
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-600">✅ Last Check-In:</span>
-                  <span className="font-medium">{new Date(status.lastCheckIn).toLocaleString()}</span>
+                  <span className="font-medium">{formatDateWithOrdinalAndTime(status.lastCheckIn)}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-red-600">🚨 Next Alert Time:</span>
-                  <span className="font-medium">{new Date(status.nextAlertTime).toLocaleString()}</span>
+                  <span className="font-medium">{formatDateWithOrdinalAndTime(status.nextAlertTime)}</span>
                 </div>
               </div>
             )}
