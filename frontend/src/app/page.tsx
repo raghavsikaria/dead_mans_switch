@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import TechStackSection from "@/components/TechStackSection"
 import { signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider, User } from "firebase/auth"
 import { auth } from "@/lib/firebase"
 import axios from "axios"
@@ -165,19 +166,30 @@ export default function Home() {
             <Button variant="destructive" onClick={handleDelete} disabled={loading}>Delete My Account</Button>
 
             {status && (
-              <div className="text-sm text-gray-700 space-y-1 mt-4">
-                <p>⏱️ <strong>Threshold:</strong> {status.threshold} hours</p>
-                <p>✅ <strong>Last Check-In:</strong> {new Date(status.lastCheckIn).toLocaleString()}</p>
-                <p>🚨 <strong>Next Alert Time:</strong> {new Date(status.nextAlertTime).toLocaleString()}</p>
+              <div className="mt-4 rounded-md border bg-muted/50 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 shadow-sm space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-500">⏱️ Threshold:</span>
+                  <span className="font-medium">{status.threshold} hours</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-green-600">✅ Last Check-In:</span>
+                  <span className="font-medium">{new Date(status.lastCheckIn).toLocaleString()}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-red-600">🚨 Next Alert Time:</span>
+                  <span className="font-medium">{new Date(status.nextAlertTime).toLocaleString()}</span>
+                </div>
               </div>
             )}
           </CardContent>
         </Card>
       )}
 
-      <div className="text-xs text-gray-400 mt-6 text-center">
+      <TechStackSection />
+
+      {/* <div className="text-xs text-gray-400 mt-6 text-center">
         Built using React, Firebase Auth, AWS Lambda, API Gateway, DynamoDB, SES, and Terraform.
-      </div>
+      </div> */}
     </main>
   )
 }
