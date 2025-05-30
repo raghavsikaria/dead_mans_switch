@@ -2,8 +2,8 @@
 
 ![Build-Backend](https://img.shields.io/github/actions/workflow/status/raghavsikaria/dead_mans_switch/.github/workflows/deploy.yml)
 ![Build-Frontend](https://img.shields.io/github/actions/workflow/status/raghavsikaria/dead_mans_switch/.github/workflows/deploy-frontend.yml)
-![License](https://img.shields.io/github/license/your-username/dead_mans_switch)
-![Last Commit](https://img.shields.io/github/last-commit/your-username/dead_mans_switch)
+![License](https://img.shields.io/github/license/raghavsikaria/dead_mans_switch)
+![Last Commit](https://img.shields.io/github/last-commit/raghavsikaria/dead_mans_switch)
 ![Firebase](https://img.shields.io/badge/deployed-Firebase-brightgreen)
 ![AWS](https://img.shields.io/badge/AWS-cloud-orange)
 ![Terraform](https://img.shields.io/badge/Terraform-IaC-purple)
