@@ -1,12 +1,11 @@
 # Dead Man’s Switch
 
-![Build-Backend](https://img.shields.io/github/actions/workflow/status/raghavsikaria/dead_mans_switch/.github/workflows/deploy.yml)
-![Build-Frontend](https://img.shields.io/github/actions/workflow/status/raghavsikaria/dead_mans_switch/.github/workflows/deploy-frontend.yml)
-![License](https://img.shields.io/github/license/raghavsikaria/dead_mans_switch)
-![Last Commit](https://img.shields.io/github/last-commit/raghavsikaria/dead_mans_switch)
+![Build-Backend](https://github.com/raghavsikaria/dead_mans_switch/actions/workflows/deploy.yml/badge.svg)
+![Build-Frontend](https://github.com/raghavsikaria/dead_mans_switch/actions/workflows/deploy-frontend.yml/badge.svg)
 ![Firebase](https://img.shields.io/badge/deployed-Firebase-brightgreen)
 ![AWS](https://img.shields.io/badge/AWS-cloud-orange)
 ![Terraform](https://img.shields.io/badge/Terraform-IaC-purple)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
 Well, this tool, is more like my personal safety device. And for crazy people like me :). I just disappear when I am traveling. So I created this privacy-focused safety automation tool that automatically sends alert emails to emergency contacts if the user fails to check in within a specified time. This project leverages serverless architecture and modern cloud technologies to ensure high availability, reliability, and security.
 
