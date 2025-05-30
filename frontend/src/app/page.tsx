@@ -207,20 +207,27 @@ export default function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center p-4 bg-gray-50">
-      <h1 className="text-3xl font-bold mb-4">Welcome to Dead Man&apos;s Switch</h1>
-      <p className="mb-6 text-gray-600 text-center max-w-xl">
-        A safety tool that checks in on you. If you don’t check in within a configured timeframe,
-        it automatically sends alert emails to your selected contacts.
-      </p>
-
+      <div className="w-full max-w-xl text-center px-4">
+      <h1 className="text-3xl sm:text-4xl font-bold mb-4 leading-tight">
+        <span className="block">Welcome to</span>
+        <span className="block whitespace-nowrap">Dead Man&apos;s Switch</span>
+      </h1>
+        <p className="mb-6 text-gray-600 text-pretty text-balance">
+          A safety tool that checks in on you. If you don’t check in within a configured timeframe,
+          it automatically sends alert emails to your selected contacts.
+        </p>
+      </div>
+  
       {loading && <Loader />}
-
+  
       {!user && (
-        <Button onClick={handleGoogleSignIn}>Sign in with Google / Check In</Button>
+        <Button onClick={handleGoogleSignIn} className="mt-4">
+          Sign in with Google / Check In
+        </Button>
       )}
-
+  
       {user && (
-        <Card className="w-full max-w-md">
+        <Card className="w-full max-w-md mt-6">
           <CardContent className="flex flex-col gap-4 py-6">
             <div>
               <Label>Threshold Time (in hours)</Label>
@@ -239,34 +246,36 @@ export default function Home() {
                 onChange={(e) => setEmails(e.target.value)}
               />
             </div>
-            <Button onClick={handleSave} disabled={loading}>{loading ? "Saving..." : "Save Settings"}</Button>
-            <Button variant="destructive" onClick={handleDelete} disabled={loading}>Delete My Account</Button>
-
+            <Button onClick={handleSave} disabled={loading}>
+              {loading ? "Saving..." : "Save Settings"}
+            </Button>
+            <Button variant="destructive" onClick={handleDelete} disabled={loading}>
+              Delete My Account
+            </Button>
+  
             {status && (
-              <div className="mt-4 rounded-md border bg-muted/50 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 shadow-sm space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-gray-500">⏱️ Threshold:</span>
-                  <span className="font-medium">{status.threshold} hours</span>
+              <div className="mt-4 rounded-md border bg-muted/50 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 shadow-sm space-y-3 sm:space-y-2">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                  <span className="text-gray-500 whitespace-nowrap">⏱️ <strong>Threshold:</strong></span>
+                  <span>{status.threshold} hours</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-green-600">✅ Last Check-In:</span>
-                  <span className="font-medium">{formatDateWithOrdinalAndTime(status.lastCheckIn)}</span>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                  <span className="text-green-600 whitespace-nowrap">✅ <strong>Last Check-In:</strong></span>
+                  <span>{formatDateWithOrdinalAndTime(status.lastCheckIn)}</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-red-600">🚨 Next Alert Time:</span>
-                  <span className="font-medium">{formatDateWithOrdinalAndTime(status.nextAlertTime)}</span>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                  <span className="text-red-600 whitespace-nowrap">🚨 <strong>Next Alert Time:</strong></span>
+                  <span>{formatDateWithOrdinalAndTime(status.nextAlertTime)}</span>
                 </div>
               </div>
             )}
           </CardContent>
         </Card>
       )}
-
-      <TechStackSection />
-
-      {/* <div className="text-xs text-gray-400 mt-6 text-center">
-        Built using React, Firebase Auth, AWS Lambda, API Gateway, DynamoDB, SES, and Terraform.
-      </div> */}
+  
+      <div className="mt-8 w-full px-4">
+        <TechStackSection />
+      </div>
     </main>
   )
 }
